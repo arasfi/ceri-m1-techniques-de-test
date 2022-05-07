@@ -75,7 +75,7 @@ public class IPokedexTest {
 		Assert.assertEquals(pokemonList.getClass(), pokedex.getPokemons().getClass());
 
 	}
-	
+	 
 	@Test
 	public void getPokemonsCompTest() {
 		

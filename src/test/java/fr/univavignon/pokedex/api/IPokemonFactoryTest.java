@@ -18,7 +18,7 @@ public class IPokemonFactoryTest {
 	Pokemon bulbizarre;
 	Pokemon aquali;
 	Pokemon pikachu;
-
+ 
 	@Before
 	public void init() {
 		// On instancie trois objets Pokemon

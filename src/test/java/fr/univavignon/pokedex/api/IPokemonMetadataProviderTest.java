@@ -22,7 +22,7 @@ public class IPokemonMetadataProviderTest {
 		pikatchuMeta = new PokemonMetadata(1, "pikatchu", 187, 187, 261);
 		aqualiMeta = new PokemonMetadata(133, "Aquali", 186, 186, 260);
 	}
-
+ 
 	@Test
 	public void getPokemonMetadataTest() throws PokedexException {
 

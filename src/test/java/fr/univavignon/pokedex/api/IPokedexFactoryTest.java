@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
+ 
 public class IPokedexFactoryTest {
 
 	IPokedexFactory pokedexFactory = Mockito.mock(IPokedexFactory.class);

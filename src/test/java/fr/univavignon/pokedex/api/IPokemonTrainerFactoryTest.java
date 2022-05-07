@@ -22,7 +22,7 @@ public class IPokemonTrainerFactoryTest {
 		pokemonTrainer = new PokemonTrainer("Equipe 1", Team.MYSTIC, pokedex);
 
 	}
-
+ 
 	@Test
 	public void createTrainerTest() {
 		Mockito.doReturn(pokemonTrainer).when(pokemonTrainerFactory).createTrainer("Equipe 1", Team.MYSTIC, pokemonFactory);

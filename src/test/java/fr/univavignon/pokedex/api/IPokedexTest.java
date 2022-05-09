@@ -19,11 +19,17 @@ public class IPokedexTest {
 	Pokemon pikatchu;
 	Pokemon aquali;
 	ArrayList<Pokemon> pokemons;
+	ArrayList<Pokemon> pokemonsCP;
+	ArrayList<Pokemon> pokemonsINDEX;
+	ArrayList<Pokemon> pokemonsNAME;
 
 	@Before
 	public void init() {
 
 		pokedex = Mockito.mock(IPokedex.class);
+		pokemonsNAME = new ArrayList<>();
+		pokemonsCP = new ArrayList<>();
+		pokemonsINDEX = new ArrayList<>();
 		pokemons = new ArrayList<>();
 		bulbizarre = new Pokemon(1, "Bulbizarre", 100, 12, 9, 13, 4, 200, 5, 66.0);
 		pikatchu = new Pokemon(0, "Pikatchu", 126, 126, 90, 613, 64, 4000, 4, 56.0);
@@ -76,23 +82,35 @@ public class IPokedexTest {
 
 	}
 	 
-//	@Test
-//	public void getPokemonsCompTest() {
-//		
-//		List<Pokemon> pokemonsParIndex = List.of(pikatchu, aquali);
-//		List<Pokemon> pokemonsParCp = List.of(pikatchu, aquali);
-//		List<Pokemon> pokemonsParName = List.of(aquali, pikatchu);
-//		
-//		IPokedex pokedex = Mockito.mock(IPokedex.class);
-//		
-//		Mockito.doReturn(pokemonsParIndex).when(pokedex).getPokemons(PokemonComparators.INDEX);
-//		Mockito.doReturn(pokemonsParCp).when(pokedex).getPokemons(PokemonComparators.CP);
-//		Mockito.doReturn(pokemonsParName).when(pokedex).getPokemons(PokemonComparators.NAME);
-//		
-//		
-//		Assert.assertEquals(pokemonsParIndex, pokedex.getPokemons(PokemonComparators.INDEX));
-//		Assert.assertEquals(pokemonsParCp, pokedex.getPokemons(PokemonComparators.CP));
-//		Assert.assertEquals(pokemonsParName, pokedex.getPokemons(PokemonComparators.NAME));
-//	}
+	@Test
+	public void getPokemonsCompTest() {
+		
+		pokemonsCP.add(pikatchu);
+		pokemonsCP.add(aquali);
+		
+		pokemonsNAME.add(pikatchu);
+		pokemonsNAME.add(aquali);
+		
+		pokemonsINDEX.add(aquali);
+		pokemonsINDEX.add(pikatchu);
+		
+		
+		
+		List<Pokemon> pokemonsParIndex = Collections.unmodifiableList(pokemonsINDEX);
+		List<Pokemon> pokemonsParCp = Collections.unmodifiableList(pokemonsCP);
+		List<Pokemon> pokemonsParName = Collections.unmodifiableList(pokemonsNAME);
+
+		
+		IPokedex pokedex = Mockito.mock(IPokedex.class);
+		
+		Mockito.doReturn(pokemonsParIndex).when(pokedex).getPokemons(PokemonComparators.INDEX);
+		Mockito.doReturn(pokemonsParCp).when(pokedex).getPokemons(PokemonComparators.CP);
+		Mockito.doReturn(pokemonsParName).when(pokedex).getPokemons(PokemonComparators.NAME);
+		
+		
+		Assert.assertEquals(pokemonsParIndex, pokedex.getPokemons(PokemonComparators.INDEX));
+		Assert.assertEquals(pokemonsParCp, pokedex.getPokemons(PokemonComparators.CP));
+		Assert.assertEquals(pokemonsParName, pokedex.getPokemons(PokemonComparators.NAME));
+	}
 
 }

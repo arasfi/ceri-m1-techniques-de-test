@@ -65,7 +65,28 @@
 
                 </executions>
             </plugin>
-            
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>10.1</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+           
             <plugin>
                 <groupId>org.jacoco</groupId>
 				 <artifactId>jacoco-maven-plugin</artifactId>
@@ -85,7 +106,29 @@
 					 </execution>
 				 </executions>
             </plugin>
-            
+              <plugin>
+                <groupId>com.github.bordertech.buildtools</groupId>
+                <artifactId>badger</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>badges</goal>
+                        </goals>
+                        <configuration>
+                            <outputDir>target/site/badges</outputDir>
+                            <inputFiles>
+                                <inputFile>target/pmd.xml</inputFile>
+                                <inputFile>target/findbugs-report.xml</inputFile>
+                                <inputFile>target/findbugsXml.xml</inputFile>
+                                <inputFile>target/checkstyle-result.xml</inputFile>
+                                <inputFile>target/coverage-report.xml</inputFile>
+                            </inputFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

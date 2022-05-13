@@ -28,6 +28,9 @@ jobs:
           command: mvn -B -DskipTests clean package
       # Then run your tests!
       - run:
+          name: Checkstyle
+          command: mvn checkstyle:checkstyle
+      - run:
           name: Test
           command: mvn test
       - codecov/upload:

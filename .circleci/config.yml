@@ -54,7 +54,7 @@ jobs:
             git config user.name "arasfi"
       - add_ssh_keys:
           fingerprints:
-            - "ec:44:81:9d:b0:98:57:46:41:29:eb:71:dc:56:bf:66"
+            - "81:bb:0d:e7:88:99:22:34:3a:10:8c:d4:3a:81:c5:31"
       - run:
           name: Deploy Documentation to master branch
           command: |

@@ -5,4 +5,4 @@
 [![CircleCI](https://circleci.com/gh/arasfi/ceri-m1-techniques-de-test1/tree/master.svg?style=svg)](https://circleci.com/gh/arasfi/ceri-m1-techniques-de-test1/tree/master)
 ![Codecov](target/site/badges/checkstyle-result.svg)
 
-Javadoc (https://rasfi.me/ceri-m1-techniques-de-test1/fr/univavignon/pokedex/api/package-summary.html)
+Javadoc (http://rasfi.me/ceri-m1-techniques-de-test1/fr/univavignon/pokedex/api/package-summary.html)

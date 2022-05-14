@@ -15,102 +15,66 @@ import org.junit.Assert;
 public class IPokedexTest {
 
 	IPokedex pokedex;
-	Pokemon bulbizarre;
 	Pokemon pikatchu;
 	Pokemon aquali;
-	ArrayList<Pokemon> pokemons;
-	ArrayList<Pokemon> pokemonsCP;
-	ArrayList<Pokemon> pokemonsINDEX;
-	ArrayList<Pokemon> pokemonsNAME;
+
+	IPokedexFactory pokedexFactory;
+	IPokemonMetadataProvider metadataProvider;
+	IPokemonFactory pokemonFactory;
 
 	@Before
 	public void init() {
+		pokedexFactory = new PokedexFactory();
+		metadataProvider = new PokemonMetadataProvider();
+		pokemonFactory = new PokemonFactory();
+		pokedex = pokedexFactory.createPokedex(metadataProvider, pokemonFactory);
+		
 
-		pokedex = Mockito.mock(IPokedex.class);
-		pokemonsNAME = new ArrayList<>();
-		pokemonsCP = new ArrayList<>();
-		pokemonsINDEX = new ArrayList<>();
-		pokemons = new ArrayList<>();
-		bulbizarre = new Pokemon(1, "Bulbizarre", 100, 12, 9, 13, 4, 200, 5, 66.0);
-		pikatchu = new Pokemon(0, "Pikatchu", 126, 126, 90, 613, 64, 4000, 4, 56.0);
-		aquali = new Pokemon(133, "Aquali", 186, 186, 260, 2729, 202, 5000, 4, 100.0);
-		pokemons.add(bulbizarre);
-		pokemons.add(pikatchu);
-		pokemons.add(aquali);
+		pikatchu = pokemonFactory.createPokemon(0, 613, 64, 4000, 4);
+		aquali = pokemonFactory.createPokemon(133, 2729, 202, 5000, 4);
+		pokedex.addPokemon(pikatchu);
+		pokedex.addPokemon(aquali);
 
 
 	}
 
 	@Test
 	public void sizeTest() {
-		Mockito.doReturn(pokemons.size()).when(pokedex).size();
-		Assert.assertEquals(3, pokedex.size());
+		assertEquals(2, pokedex.size());
 	}
 
 	@Test
 	public void addPokemonTest() {
-		Mockito.doReturn(pikatchu.getIndex()).when(pokedex).addPokemon(pikatchu);
-		Assert.assertEquals(0, pokedex.addPokemon(pikatchu));
+		assertEquals(2, pokedex.addPokemon(pikatchu));
 	}
 
 	@Test
 	public void getPokemonTest() throws PokedexException {
-		Mockito.doReturn(aquali).when(pokedex).getPokemon(133);
-		Mockito.doReturn(pikatchu).when(pokedex).getPokemon(0);
-		Mockito.doReturn(bulbizarre).when(pokedex).getPokemon(1);
-		Assert.assertEquals(bulbizarre, pokedex.getPokemon(1));
-		Assert.assertEquals(pikatchu, pokedex.getPokemon(0));
-		Assert.assertEquals(aquali, pokedex.getPokemon(133));
-
-		Mockito.doThrow(new PokedexException("Index du pokemon introuvable")).when(pokedex)
-				.getPokemon(Mockito.intThat(i -> i < 0 || i > 150));
-		Assert.assertThrows(PokedexException.class, () -> pokedex.getPokemon(300));
-		Assert.assertThrows(PokedexException.class, () -> pokedex.getPokemon(-2));
+		assertEquals(pikatchu, pokedex.getPokemon(0));
+		assertEquals(aquali, pokedex.getPokemon(1));
+		
+		assertThrows(PokedexException.class, () -> pokedex.getPokemon(-1));
 
 	}
 
 	@Test
 	public void getPokemonsTest() {
-		List<Pokemon> pokemonList = Collections.unmodifiableList(pokemons);
-		Mockito.doReturn(pokemonList).when(pokedex).getPokemons();
-		Assert.assertEquals(pokemons.size(), pokedex.getPokemons().size());
-		Assert.assertEquals(pokemons, pokedex.getPokemons());
-		Assert.assertEquals(bulbizarre, pokedex.getPokemons().get(0));
-		Assert.assertEquals(pikatchu, pokedex.getPokemons().get(1));
-		Assert.assertEquals(aquali, pokedex.getPokemons().get(2));
-		Assert.assertEquals(pokemonList.getClass(), pokedex.getPokemons().getClass());
-
+		assertEquals(2, pokedex.getPokemons().size());
+		assertEquals(pikatchu, pokedex.getPokemons().get(0));
+		assertEquals(aquali, pokedex.getPokemons().get(1));
 	}
 	 
 	@Test
 	public void getPokemonsCompTest() {
-		
-		pokemonsCP.add(pikatchu);
-		pokemonsCP.add(aquali);
-		
-		pokemonsNAME.add(pikatchu);
-		pokemonsNAME.add(aquali);
-		
-		pokemonsINDEX.add(aquali);
-		pokemonsINDEX.add(pikatchu);
-		
-		
-		
-		List<Pokemon> pokemonsParIndex = Collections.unmodifiableList(pokemonsINDEX);
-		List<Pokemon> pokemonsParCp = Collections.unmodifiableList(pokemonsCP);
-		List<Pokemon> pokemonsParName = Collections.unmodifiableList(pokemonsNAME);
+		assertEquals(pikatchu, pokedex.getPokemons(PokemonComparators.INDEX).get(0));
+		assertEquals(aquali, pokedex.getPokemons(PokemonComparators.INDEX).get(1));
+
+		assertEquals(pikatchu, pokedex.getPokemons(PokemonComparators.CP).get(0));
+		assertEquals(aquali, pokedex.getPokemons(PokemonComparators.CP).get(1));
 
 		
-		IPokedex pokedex = Mockito.mock(IPokedex.class);
-		
-		Mockito.doReturn(pokemonsParIndex).when(pokedex).getPokemons(PokemonComparators.INDEX);
-		Mockito.doReturn(pokemonsParCp).when(pokedex).getPokemons(PokemonComparators.CP);
-		Mockito.doReturn(pokemonsParName).when(pokedex).getPokemons(PokemonComparators.NAME);
-		
-		
-		Assert.assertEquals(pokemonsParIndex, pokedex.getPokemons(PokemonComparators.INDEX));
-		Assert.assertEquals(pokemonsParCp, pokedex.getPokemons(PokemonComparators.CP));
-		Assert.assertEquals(pokemonsParName, pokedex.getPokemons(PokemonComparators.NAME));
+		assertEquals(aquali, pokedex.getPokemons(PokemonComparators.NAME).get(0));
+		assertEquals(pikatchu, pokedex.getPokemons(PokemonComparators.NAME).get(1));
 	}
 
 }

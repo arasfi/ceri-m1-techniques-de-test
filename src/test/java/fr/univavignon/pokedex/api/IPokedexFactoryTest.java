@@ -9,10 +9,10 @@ import org.mockito.Mockito;
  
 public class IPokedexFactoryTest {
 
-	IPokedexFactory pokedexFactory = Mockito.mock(IPokedexFactory.class);
-	IPokemonMetadataProvider pokemonMetadataProvider = Mockito.mock(IPokemonMetadataProvider.class);
-	IPokemonFactory pokemonFactory = Mockito.mock(IPokemonFactory.class);
-	IPokedex pokedex = Mockito.mock(IPokedex.class);
+	IPokedexFactory pokedexFactory = new PokedexFactory();
+	IPokemonMetadataProvider pokemonMetadataProvider = new PokemonMetadataProvider();
+	IPokemonFactory pokemonFactory = new PokemonFactory(); ;
+	IPokedex pokedex = new Pokedex(pokemonFactory, pokemonMetadataProvider);
 	PokemonMetadata aquali;
 	PokemonMetadata pikatchu;
 	PokemonMetadata bulbizarre;
@@ -27,8 +27,7 @@ public class IPokedexFactoryTest {
 
 	@Test
 	public void createPokedexTest() {
-		Mockito.doReturn(pokedex).when(pokedexFactory)
-				.createPokedex(pokemonMetadataProvider, pokemonFactory);
+
 		Assert.assertEquals(pokedex.getClass(), pokedexFactory
 				.createPokedex(pokemonMetadataProvider, pokemonFactory).getClass());
 		Assert.assertNotNull(pokedexFactory.createPokedex(pokemonMetadataProvider, pokemonFactory));
